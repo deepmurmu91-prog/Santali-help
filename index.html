@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Santali Help</title>
+<style>
+*{box-sizing:border-box}
+:root{--green:#075e54;--bright:#128c7e;--bg:#efeae2;--white:#fff;--text:#172b25;--muted:#66756f}
+body{margin:0;font-family:Arial,sans-serif;background:#d9e2dc;color:var(--text)}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.app{max-width:1400px;height:100dvh;min-height:500px;margin:auto;background:white;display:flex;flex-direction:column}
+.top{height:65px;background:var(--green);color:white;display:flex;align-items:center;padding:10px 16px;gap:12px}
+.logo{width:42px;height:42px;border-radius:50%;background:#fff;color:var(--green);display:grid;place-items:center;font-size:25px;font-weight:bold}
+.brand{flex:1}.brand h1{font-size:20px;margin:0}.brand p{font-size:12px;margin:4px 0 0}
+select{padding:9px;border-radius:8px;border:1px solid #ddd;background:white;color:#222;max-width:150px}
+.layout{display:flex;flex:1;min-height:0}
+.sidebar{width:350px;max-width:40%;border-right:1px solid #ddd;display:flex;flex-direction:column}
+.sidehead{padding:13px;border-bottom:1px solid #eee}
+.search{width:100%;border:0;background:#f0f2f5;border-radius:9px;padding:12px;outline:none}
+.chatlist{overflow:auto;flex:1}
+.contact{width:100%;border:0;border-bottom:1px solid #f0f0f0;background:white;display:flex;align-items:center;gap:12px;padding:14px;text-align:left}
+.contact:hover,.contact.active{background:#e9f5f1}
+.avatar{width:46px;height:46px;border-radius:50%;background:#d7eee5;color:var(--green);display:grid;place-items:center;font-weight:bold;font-size:18px;flex-shrink:0}
+.contactinfo{flex:1;min-width:0}.contactinfo strong{display:block;margin-bottom:5px}.contactinfo small{color:var(--muted)}
+.chatarea{flex:1;min-width:0;display:flex;flex-direction:column;background:var(--bg)}
+.chathead{height:65px;background:#f0f2f5;display:flex;align-items:center;gap:10px;padding:10px 15px}
+.chathead .avatar{width:42px;height:42px}.chatname{flex:1}.chatname strong{display:block}.chatname small{color:var(--muted)}
+.chatbuttons{display:flex;gap:6px}.iconbtn{border:0;background:transparent;border-radius:8px;padding:9px;font-size:19px}
+.iconbtn:hover{background:#dfe9e4}
+.messages{flex:1;overflow:auto;padding:20px 5%;display:flex;flex-direction:column;gap:9px}
+.welcome{margin:auto;text-align:center;max-width:400px;color:#53635c}
+.welcome .big{font-size:65px}
+.bubble{max-width:80%;padding:10px 12px;background:white;border-radius:9px;align-self:flex-start;overflow-wrap:anywhere;box-shadow:0 1px 1px #0001}
+.bubble.mine{background:#d9fdd3;align-self:flex-end}
+.bubble small{display:block;text-align:right;color:#6b7a72;font-size:10px;margin-top:5px}
+.bubble img,.bubble video{max-width:100%;max-height:230px;display:block;border-radius:7px;margin-top:5px}
+.composer{display:flex;align-items:center;gap:8px;padding:10px;background:#f0f2f5}
+.composer input{flex:1;min-width:0;border:0;border-radius:22px;padding:13px 15px;outline:none}
+.round{border:0;border-radius:50%;background:var(--bright);color:white;width:43px;height:43px;font-size:18px}
+.filebtn{background:transparent;color:#52655d;font-size:22px;position:relative;overflow:hidden;padding:8px}
+.filebtn input{position:absolute;inset:0;opacity:0;width:100%;cursor:pointer}
+.bottomnav{display:none}
+.panel{display:none;padding:20px;overflow:auto;background:#f7f9f8;flex:1}
+.panel.active{display:block}
+.panelcard{max-width:600px;background:white;border:1px solid #e1e9e4;border-radius:14px;padding:18px;margin:0 auto 15px}
+.panelcard h2{margin-top:0}
+.field{margin:14px 0}.field label{display:block;margin-bottom:7px;font-weight:bold}
+.field input,.field textarea{width:100%;padding:12px;border:1px solid #ccd9d1;border-radius:8px}
+.primary{background:var(--bright);color:white;border:0;border-radius:8px;padding:11px 15px}
+.secondary{background:#e7f4ee;color:var(--green);border:0;border-radius:8px;padding:11px 15px}
+.note{font-size:13px;color:var(--muted);line-height:1.6}
+@media(max-width:700px){
+ .app{height:100dvh}.sidebar{display:none}.top{height:60px;padding:8px 10px}
+ .brand h1{font-size:18px}.brand p{font-size:11px}.top select{max-width:112px;padding:7px}
+ .chathead{height:58px;padding:7px}.chatbuttons{gap:0}.iconbtn{padding:7px;font-size:17px}
+ .messages{padding:15px 12px}.bubble{max-width:90%}
+ .bottomnav{display:flex;justify-content:space-around;border-top:1px solid #ddd;background:white}
+ .bottomnav button{flex:1;border:0;background:white;padding:10px 2px;font-size:12px;color:#52645b}
+ .bottomnav button.active{color:var(--green);font-weight:bold}
+ .layout{min-height:0}.panel{padding:12px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+ <div class="logo">ᱥ</div>
+ <div class="brand"><h1>Santali Help</h1><p id="tagline">Connect with your community</p></div>
+ <select id="language" aria-label="Language" onchange="changeLanguage(this.value)">
+  <option value="en">English</option>
+  <option value="bn">বাংলা</option>
+  <option value="sat">ᱥᱟᱱᱛᱟᱲᱤ</option>
+ </select>
+</header>
+
+<div class="layout">
+<aside class="sidebar">
+ <div class="sidehead"><input id="search" class="search" placeholder="Search chats..." oninput="renderContacts()"></div>
+ <div id="contacts" class="chatlist"></div>
+</aside>
+
+<section id="chatarea" class="chatarea">
+ <div class="chathead">
+  <div class="avatar" id="chatAvatar">S</div>
+  <div class="chatname"><strong id="chatTitle">Santali Community</strong><small id="chatStatus">Local demo</small></div>
+  <div class="chatbuttons">
+   <button class="iconbtn" onclick="callNotice('audio')" title="Audio call">📞</button>
+   <button class="iconbtn" onclick="callNotice('video')" title="Video call">🎥</button>
+   <button class="iconbtn" onclick="showPanel('profile')" title="Profile">👤</button>
+  </div>
+ </div>
+ <div id="messages" class="messages"></div>
+ <form class="composer" id="composer" onsubmit="sendMessage(event)">
+  <label class="filebtn" title="Attach photo or video">＋<input type="file" accept="image/*,video/*" onchange="sendMedia(event)"></label>
+  <input id="messageInput" placeholder="Type a message..." autocomplete="off">
+  <button class="round" type="submit" aria-label="Send">➤</button>
+  <button class="round" type="button" onclick="recordVoice()" title="Voice message">🎙</button>
+ </form>
+</section>
+
+<section id="panel" class="panel"></section>
+</div>
+
+<nav class="bottomnav">
+ <button id="navChats" class="active" onclick="showChats()">💬<br><span data-i="chats">Chats</span></button>
+ <button onclick="showPanel('media')">📷<br><span data-i="media">Media</span></button>
+ <button onclick="showPanel('ai')">🤖<br><span data-i="ai">AI</span></button>
+ <button onclick="showPanel('profile')">👤<br><span data-i="profile">Profile</span></button>
+</nav>
+</div>
+
+<script>
+const translations={
+en:{
+tagline:"Connect with your community",search:"Search chats...",status:"Local demo",
+chats:"Chats",media:"Media",ai:"AI",profile:"Profile",type:"Type a message...",
+welcome:"Welcome to Santali Help",welcomeText:"Choose a chat and send your first message.",
+community:"Santali Community",friend:"My Friend",family:"Family Group",
+profileTitle:"Your Profile",name:"Your name",about:"About you",save:"Save profile",
+saved:"Profile saved on this device.",mediaTitle:"Photos and videos",
+mediaText:"Choose a photo or video from your device.",aiTitle:"AI Assistant",
+aiText:"The AI service is not connected yet.",ask:"Ask a question...",
+send:"Send",voice:"Voice recording",voiceUnavailable:"Voice recording needs microphone permission and a supported browser.",
+callUnavailable:"Real internet calls are not connected yet. A calling service and server are required.",
+local:"Messages are stored only on this device. This is not yet a live online chat.",
+you:"You",aiReply:"This demo does not have an AI service connected yet.",
+empty:"No messages yet. Say hello!",fileError:"Please choose an image or video.",
+aboutPlaceholder:"Write something about yourself"
+},
+bn:{
+tagline:"আপনার কমিউনিটির সঙ্গে যুক্ত থাকুন",search:"চ্যাট খুঁজুন...",status:"স্থানীয় ডেমো",
+chats:"চ্যাট",media:"মিডিয়া",ai:"AI",profile:"প্রোফাইল",type:"মেসেজ লিখুন...",
+welcome:"Santali Help-এ স্বাগতম",welcomeText:"চ্যাট বেছে নিয়ে প্রথম মেসেজ পাঠান।",
+community:"সাঁওতালি কমিউনিটি",friend:"আমার বন্ধু",family:"পরিবারের গ্রুপ",
+profileTitle:"আপনার প্রোফাইল",name:"আপনার নাম",about:"আপনার সম্পর্কে",save:"প্রোফাইল সেভ করুন",
+saved:"এই ডিভাইসে প্রোফাইল সেভ হয়েছে।",mediaTitle:"ছবি ও ভিডিও",
+mediaText:"ডিভাইস থেকে ছবি বা ভিডিও বেছে নিন।",aiTitle:"AI সহায়ক",
+aiText:"AI পরিষেবা এখনও সংযুক্ত করা হয়নি।",ask:"প্রশ্ন লিখুন...",
+send:"পাঠান",voice:"ভয়েস রেকর্ডিং",voiceUnavailable:"ভয়েস রেকর্ড করতে মাইক্রোফোনের অনুমতি ও উপযুক্ত ব্রাউজার দরকার।",
+callUnavailable:"ইন্টারনেট কল এখনও চালু নয়। এর জন্য কল পরিষেবা ও সার্ভার দরকার।",
+local:"মেসেজ শুধু এই ডিভাইসে সেভ হয়। এটি এখনও লাইভ অনলাইন চ্যাট নয়।",
+you:"আপনি",aiReply:"এই ডেমোতে AI পরিষেবা সংযুক্ত করা হয়নি।",
+empty:"এখনও মেসেজ নেই। নমস্কার লিখে পাঠান!",fileError:"ছবি বা ভিডিও বেছে নিন।",
+aboutPlaceholder:"নিজের সম্পর্কে কিছু লিখুন"
+},
+sat:{
+tagline:"ᱟᱯᱮ ᱫᱚ ᱥᱟᱶᱛᱟ ᱥᱟᱹᱜᱟᱹᱭ ᱢᱮ",search:"ᱥᱮᱨᱪ ᱪᱟᱴ...",status:"ᱞᱚᱠᱟᱞ ᱰᱮᱢᱳ",
+chats:"ᱪᱟᱴ",media:"ᱢᱤᱰᱤᱭᱟ",ai:"AI",profile:"ᱯᱨᱚᱯᱷᱟᱭᱤᱞ",type:"ᱢᱮᱥᱮᱡ ᱚᱞ ᱢᱮ...",
+welcome:"Santali Help ᱨᱮ ᱡᱚᱦᱟᱨ",welcomeText:"ᱪᱟᱴ ᱵᱟᱪᱷᱟᱣ ᱠᱟᱛᱮ ᱢᱮᱥᱮᱡ ᱠᱩᱞ ᱢᱮ।",
+community:"ᱥᱟᱱᱛᱟᱲᱤ ᱥᱟᱶᱛᱟ",friend:"ᱤᱧᱟᱜ ᱥᱟᱹᱜᱟᱹᱭ",family:"ᱚᱲᱟᱜ ᱜᱨᱩᱯ",
+profileTitle:"ᱟᱢᱟᱜ ᱯᱨᱚᱯᱷᱟᱭᱤᱞ",name:"ᱟᱢᱟᱜ ᱧᱩᱛᱩᱢ",about:"ᱟᱢ ᱵᱟᱵᱚᱛ",save:"ᱥᱮᱵᱷ ᱢᱮ",
+saved:"ᱯᱨᱚᱯᱷᱟᱭᱤᱞ ᱥᱮᱵᱷ ᱟᱠᱟᱱᱟ।",mediaTitle:"ᱯᱷᱚᱴᱚ ᱟᱨ ᱵᱷᱤᱰᱤᱭᱳ",
+mediaText:"ᱟᱢᱟᱜ ᱰᱤᱵᱷᱟᱭᱤᱥ ᱠᱷᱚᱱ ᱯᱷᱚᱴᱚ ᱵᱟᱪᱷᱟᱣ ᱢᱮ।",
+aiTitle:"AI ᱜᱚᱲᱚ",aiText:"AI ᱥᱮᱵᱷᱟ ᱫᱚ ᱱᱤᱛ ᱦᱟᱹᱵᱤᱡ ᱡᱚᱲᱟᱣ ᱵᱟᱝᱠᱟᱱᱟ।",
+ask:"ᱠᱩᱠᱞᱤ ᱚᱞ ᱢᱮ...",send:"ᱠᱩᱞ ᱢᱮ",voice:"ᱦᱚᱲᱚ ᱨᱮᱠᱚᱨᱰ",
+voiceUnavailable:"ᱦᱚᱲᱚ ᱨᱮᱠᱚᱨᱰ ᱞᱟᱹᱜᱤᱫ ᱢᱟᱭᱠᱨᱚᱯᱷᱚᱱ ᱟᱹᱱᱩᱢ ᱟᱨ ᱥᱟᱯᱚᱨᱴ ᱵᱨᱟᱣᱡᱟᱨ ᱞᱟᱹᱠᱛᱤ।",
+callUnavailable:"ᱤᱱᱴᱟᱨᱱᱮᱴ ᱠᱚᱞ ᱱᱤᱛ ᱦᱟᱹᱵᱤᱡ ᱵᱟᱝ ᱪᱟᱹᱞᱩᱠᱟᱱᱟ।",
+local:"ᱢᱮᱥᱮᱡ ᱫᱚ ᱱᱚᱶᱟ ᱰᱤᱵᱷᱟᱭᱤᱥ ᱨᱮ ᱜᱮ ᱥᱮᱵᱷ ᱦᱩᱭᱟ।",
+you:"ᱟᱢ",aiReply:"ᱱᱚᱶᱟ ᱰᱮᱢᱳ ᱨᱮ AI ᱥᱮᱵᱷᱟ ᱵᱟᱝ ᱡᱚᱲᱟᱣᱟᱠᱟᱱᱟ।",
+empty:"ᱪᱮᱫ ᱢᱮᱥᱮᱡ ᱵᱟᱝ ᱢᱮᱱᱟᱜᱼᱟ।",fileError:"ᱯᱷᱚᱴᱚ ᱵᱟᱝᱠᱷᱟᱱ ᱵᱷᱤᱰᱤᱭᱳ ᱵᱟᱪᱷᱟᱣ ᱢᱮ।",
+aboutPlaceholder:"ᱟᱢ ᱵᱟᱵᱚᱛ ᱚᱞ ᱢᱮ"
+}
+};
+
+let lang="en",activeChat="community",page="chats";
+const chats=[
+{id:"community",nameKey:"community",avatar:"ᱥ"},
+{id:"friend",nameKey:"friend",avatar:"F"},
+{id:"family",nameKey:"family",avatar:"👪"}
+];
+let data={};
+try{data=JSON.parse(localStorage.getItem("sh_messages")||"{}")}catch(e){data={}}
+function t(key){return (translations[lang]||translations.en)[key]||translations.en[key]||key}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function saveData(){try{localStorage.setItem("sh_messages",JSON.stringify(data))}catch(e){}}
+function changeLanguage(value){
+ lang=translations[value]?value:"en";
+ localStorage.setItem("sh_language",lang);
+ document.documentElement.lang=lang==="bn"?"bn":lang==="sat"?"sat":"en";
+ document.title="Santali Help";
+ $("tagline").textContent=t("tagline");
+ $("search").placeholder=t("search");
+ $("messageInput").placeholder=t("type");
+ document.querySelectorAll("[data-i]").forEach(el=>el.textContent=t(el.dataset.i));
+ renderContacts();renderMessages();
+ if(page!=="chats")showPanel(page);
+}
+function renderContacts(){
+ const query=$("search").value.toLowerCase();
+ $("contacts").innerHTML="";
+ chats.filter(c=>t(c.nameKey).toLowerCase().includes(query)).forEach(c=>{
+ const b=document.createElement("button");
+ b.className="contact"+(c.id===activeChat?" active":"");
+ b.innerHTML='<div class="avatar">'+c.avatar+'</div><div class="contactinfo"><strong>'+escapeHTML(t(c.nameKey))+'</strong><small>'+escapeHTML((data[c.id]||[]).slice(-1)[0]?.text||t("local"))+'</small></div>';
+ b.onclick=()=>{activeChat=c.id;showChats()};
+ $("contacts").appendChild(b);
+ });
+}
+function renderMessages(){
+ const box=$("messages");
+ if(page!=="chats")return;
+ box.innerHTML="";
+ const list=data[activeChat]||[];
+ $("chatTitle").textContent=t(chats.find(c=>c.id===activeChat)?.nameKey||"community");
+ $("chatAvatar").textContent=chats.find(c=>c.id===activeChat)?.avatar||"S";
+ if(!list.length){
+ box.innerHTML='<div class="welcome"><div class="big">💬</div><h2>'+escapeHTML(t("welcome"))+'</h2><p>'+escapeHTML(t("welcomeText"))+'</p><p class="note">'+escapeHTML(t("local"))+'</p></div>';
+ return;
+ }
+ list.forEach(m=>{
+ const div=document.createElement("div");div.className="bubble mine";
+ const txt=document.createElement("div");txt.textContent=m.text||"";div.appendChild(txt);
+ if(m.url&&m.type==="image"){const img=document.createElement("img");img.src=m.url;img.alt="Photo";div.appendChild(img)}
+ if(m.url&&m.type==="video"){const v=document.createElement("video");v.src=m.url;v.controls=true;div.appendChild(v)}
+ const small=document.createElement("small");small.textContent=m.time||"";div.appendChild(small);box.appendChild(div);
+ });
+ box.scrollTop=box.scrollHeight;
+}
+function sendMessage(event){
+ event.preventDefault();
+ const input=$("messageInput"),text=input.value.trim();if(!text)return;
+ if(!data[activeChat])data[activeChat]=[];
+ data[activeChat].push({text,time:new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})});
+ saveData();input.value="";renderMessages();renderContacts();
+}
+function sendMedia(event){
+ const file=event.target.files[0];if(!file)return;
+ if(!file.type.startsWith("image/")&&!file.type.startsWith("video/")){alert(t("fileError"));return}
+ if(file.size>4*1024*1024){alert("Please choose a file smaller than 4 MB.");return}
+ const reader=new FileReader();
+ reader.onload=()=>{
+ if(!data[activeChat])data[activeChat]=[];
+ data[activeChat].push({text:file.name,url:reader.result,type:file.type.startsWith("image/")?"image":"video",time:new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})});
+ saveData();renderMessages();renderContacts();event.target.value="";
+ };
+ reader.readAsDataURL(file);
+}
+function showChats(){
+ page="chats";$("chatarea").style.display="flex";$("panel").classList.remove("active");
+ $("navChats").classList.add("active");renderContacts();renderMessages();
+}
+function showPanel(which){
+ page=which;$("chatarea").style.display="none";$("panel").classList.add("active");
+ $("navChats").classList.remove("active");
+ const p=$("panel");
+ if(which==="profile"){
+ let profile={};try{profile=JSON.parse(localStorage.getItem("sh_profile")||"{}")}catch(e){}
+ p.innerHTML='<div class="panelcard"><h2>'+escapeHTML(t("profileTitle"))+'</h2><div class="field"><label>'+escapeHTML(t("name"))+'</label><input id="pname" value="'+escapeHTML(profile.name||"")+'"></div><div class="field"><label>'+escapeHTML(t("about"))+'</label><textarea id="pabout" rows="3" placeholder="'+escapeHTML(t("aboutPlaceholder"))+'">'+escapeHTML(profile.about||"")+'</textarea></div><button class="primary" onclick="saveProfile()">'+escapeHTML(t("save"))+'</button><p id="savedStatus" class="note"></p></div>';
+ }else if(which==="media"){
+ p.innerHTML='<div class="panelcard"><h2>📷 '+escapeHTML(t("mediaTitle"))+'</h2><p>'+escapeHTML(t("mediaText"))+'</p><input type="file" accept="image/*,video/*" onchange="previewPanelMedia(event)"><div id="mediaPreview"></div></div>';
+ }else if(which==="ai"){
+ p.innerHTML='<div class="panelcard"><h2>🤖 '+escapeHTML(t("aiTitle"))+'</h2><p>'+escapeHTML(t("aiText"))+'</p><p class="note">'+escapeHTML(t("aiReply"))+'</p><form onsubmit="askDemo(event)" class="field"><input id="aiQuestion" placeholder="'+escapeHTML(t("ask"))+'" required><br><br><button class="primary" type="submit">'+escapeHTML(t("send"))+'</button></form><div id="aiReply"></div></div>';
+ }
+}
+function saveProfile(){
+ localStorage.setItem("sh_profile",JSON.stringify({name:$("pname").value.trim(),about:$("pabout").value.trim()}));
+ $("savedStatus").textContent=t("saved");
+}
+function previewPanelMedia(event){
+ const f=event.target.files[0];if(!f)return;
+ const url=URL.createObjectURL(f),box=$("mediaPreview");box.innerHTML="";
+ let el=document.createElement(f.type.startsWith("video/")?"video":"img");
+ el.src=url;if(el.tagName==="VIDEO")el.controls=true;
+ el.style.maxWidth="100%";el.style.maxHeight="300px";box.appendChild(el);
+}
+function askDemo(event){
+ event.preventDefault();
+ $("aiReply").textContent=t("aiReply");
+}
+function callNotice(kind){alert(t("callUnavailable"))}
+function recordVoice(){alert(t("voiceUnavailable"))}
+const savedLanguage=localStorage.getItem("sh_language");
+if(savedLanguage&&translations[savedLanguage])lang=savedLanguage;
+$("language").value=lang;
+changeLanguage(lang);
+showChats();
+</script>
+</body>
+</html>
